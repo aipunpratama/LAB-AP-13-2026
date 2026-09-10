@@ -1,6 +1,6 @@
-# LAB_AP_09
+# LAB_AP_13
 
-# Repositori Tugas Praktikum Algoritma dan Pemrograman 2023
+# Repositori Tugas Praktikum Algoritma dan Pemrograman 2026
 
 ## Requirements:
 1. Buat akun GitHub (https://github.com/)
@@ -14,7 +14,7 @@
 
    ```sh
 
-   git clone https://github.com/YOUR_USERNAME/LAB-AP-01-2023.git
+   git clone https://github.com/YOUR_USERNAME/LAB-AP-01-2026.git
 
    ```
 
