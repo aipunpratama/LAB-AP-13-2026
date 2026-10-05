@@ -1,9 +1,4 @@
-#Soal Nomor 2
-#Note: Implementasikan penerimaan nilai menggunakan Arbitrary Arguments (*args), lalu kembalikan rata-rata, nilai tertinggi, dan nilai terendah sekaligus dari satu function.
-#Format Input: nilai (int/float). Input yang dikosongkan menandakan input selesai.
-#Format Output: "Masukkan nilai ujian siswa (kosongkan untuk selesai):
-#". Jika ada data: "Rata-rata kelas: <rata>", "Nilai tertinggi: <tertinggi>",
-# "Nilai terendah: <terendah>". Jika tidak ada data: "Data nilai tidak tersedia." 
+
 def rekap_nilai(*args):
     rata_rata = sum(args) / len(args)
     tertinggi = max(args)

@@ -1,9 +1,3 @@
-# Nomor 4
-#Note: Implementasikan proses konversi di dalam sebuah function, dan gunakan try-except beserta raise untuk menangani skala suhu yang tidak dikenali.
-#  Format Input: suhu (float) atau 'selesai' untuk keluar, skala_asal (C/F/K), skala_tujuan (C/F/K).
-#  Format Output: "Masukkan suhu (atau 'selesai' untuk keluar): ", "Skala asal (C/F/K): ", "Skala tujuan (C/F/K): 
-# ". Jika valid: "Hasil: <suhu> <skala_asal> = <hasil> <skala_tujuan>".
-#  Jika skala tidak dikenali: "Error: Skala suhu tidak dikenali." 
 def konversi_suhu(suhu, asal, tujuan):
     skala_valid = ['C', 'F', 'K']
     
