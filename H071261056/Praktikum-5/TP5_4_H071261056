@@ -1,0 +1,106 @@
+
+def deteksi_anomali_email(email, daftar_terdaftar):
+    error = []
+    
+    # Aturan 3: Tidak boleh ada spasi
+    if " " in email:
+        error.append("Tidak boleh mengandung spasi.")
+        
+    # Aturan 1: Harus memiliki tepat satu karakter @
+    jumlah_at = email.count("@")
+    if jumlah_at != 1:
+        error.append("Harus memiliki tepat satu karakter @.")
+    else:
+        # Pemisahan local dan domain
+        local, domain = email.split("@")
+        
+        # Aturan 2: Local dan domain tidak boleh kosong
+        if not local or not domain:
+            error.append("Bagian sebelum @ (local) atau setelah @ (domain) tidak boleh kosong.")
+            
+        # Aturan 4: Validasi bagian local
+        if local:
+            if local.startswith(".") or local.endswith("."):
+                error.append("Bagian local tidak boleh diawali atau diakhiri titik.")
+            if ".." in local:
+                error.append("Bagian local tidak boleh mengandung titik berurutan.")
+                
+        # Aturan 5: Validasi bagian domain
+        if domain:
+            if "." not in domain:
+                error.append("Bagian domain wajib memiliki minimal satu titik.")
+            if ".." in domain or domain.endswith("."):
+                error.append("Bagian domain tidak boleh mengandung titik berurutan atau diakhiri titik.")
+
+    # Aturan 7: Domain resmi (.com, .id, .ac.id)
+    domain_resmi = (".com", ".id", ".ac.id")
+    if not email.endswith(domain_resmi):
+        error.append("Wajib berakhiran dengan .com, .id, atau .ac.id")
+
+    # Aturan 6: Tidak boleh duplikat
+    if email in daftar_terdaftar:
+        error.append("e-mail sudah terdaftar (Duplikat)")
+
+    return error
+
+def cetak_daftar(daftar_email_valid, karakter_border):
+    if not daftar_email_valid:
+        return
+        
+    # Menghitung panjang email terpanjang untuk menentukan lebar bingkai
+    max_len = max(len(email) for email in daftar_email_valid)
+    lebar = max_len + 4  # padding 2 spasi kiri dan kanan
+    
+    border_line = karakter_border * (lebar + 2)
+    
+    print("\n=== HASIL EMAIL VALID ===")
+    print(border_line)
+    for email in daftar_email_valid:
+        print(f"| {email.ljust(lebar - 2)} |")
+    print(border_line)
+# Program Utama Soal 4
+if __name__ == "__main__":
+    print("=== Sistem Pencatatan Email Valid ===")
+    border_char = input("Masukkan border dengan karakter bebas: ")
+    if not border_char:
+        border_char = "="
+    border_char = border_char[0] # Ambil 1 karakter pertama
+
+    print("\nKetik 'tutup' untuk mengakhiri masukan dan mencetak email.\n")
+
+    daftar_email_valid = []
+
+    while True:
+        email_input = input("Masukkan email: ").strip()
+        
+        if email_input.lower() == "tutup":
+            break
+
+        kesalahan = deteksi_anomali_email(email_input, daftar_email_valid)
+
+        if not kesalahan:
+            print(">> Email VALID!")
+            daftar_email_valid.append(email_input)
+        else:
+            print(">> Email DITOLAK karena:")
+            for err in kesalahan:
+                print(f"   - {err}")
+
+    cetak_daftar(daftar_email_valid, border_char)
+
+
+# nama_pertama = "aqila"
+# nama_tengah = "fahira"
+# nama_akhir = "fahiqa"
+
+# nama_lengkap = nama_pertama + " " + nama_tengah + " " + nama_akhir
+# print (nama_lengkap)
+
+# jumlah = len(nama_lengkap)
+# print ("jumlah dari" + " " + nama_lengkap +  " = " + str(jumlah))
+
+# f = "f"
+# status = f in nama_lengkap
+# print (f + " " +  f + " " +  "ada di" + " " + nama_lengkap + " "+ "=" + " " + str(status))
+
+

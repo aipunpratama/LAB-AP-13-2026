@@ -1,0 +1,65 @@
+def cek_kata(teks, kata):
+    indeks = []
+    start = 0
+    
+    teks_kecil = teks.lower()
+    kata_kecil = kata.lower()
+    
+    while True:
+        posisi = teks_kecil.find(kata_kecil, start)
+    
+        if posisi == -1:
+           break
+    
+        indeks.append(posisi)
+    
+        start = posisi + len(kata_kecil)
+    
+    return indeks
+
+def cek_batas_kata(teks, i, panjang):
+    alfabet = "abcdefghijklmnopqrstuvwxyz"
+
+    if i > 0 :
+        sebelum_kata = teks[i - 1].lower()
+        if sebelum_kata in alfabet:
+            return False
+
+    if panjang + i < len(teks):
+        sesudah_kata = teks[panjang].lower()
+        if sesudah_kata in alfabet:
+            return False
+
+    return True
+
+def sensor_kata(teks, kata, simbol):
+
+    hasil = ''
+    list_indeks_awal = []
+    posisi_sebelum = 0
+    panjangkata = len(kata)
+
+    indeks_kemunculan = cek_kata(teks, kata)
+
+    for i in indeks_kemunculan:
+        if cek_batas_kata(teks, i, len(teks)):
+            hasil += teks[posisi_sebelum:i]
+
+            hasil += simbol * panjangkata
+
+            list_indeks_awal.append(i)
+
+            posisi_sebelum = i + panjangkata
+
+    hasil += teks[posisi_sebelum:]
+
+    return (hasil, list_indeks_awal, len(list_indeks_awal))
+
+teks = input("Masukkan teks: ")
+kata = input('Masukkan kata target: ')
+simbol = input('Masukkan simbol: ')
+
+hasil, awal, jumlah = sensor_kata(teks, kata, simbol)
+
+print(f"Hasil Teks: {hasil}")
+print(f"Jumlah: {jumlah} | Indeks: {awal}")
