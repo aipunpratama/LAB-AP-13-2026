@@ -1,0 +1,85 @@
+print("="*33)
+print(" SISTEM PEMILIHAN KETUA KELAS")
+print("="*33)
+
+def daftar_kandidat(kandidat_set, nama):
+    nama = nama.capitalize()
+    kandidat_set.add(nama)
+    print (f"'{nama}'berhasil didaftarkan sebagai kandidat!")
+
+kandidat_set = set()
+print("--- FASE PENDAFTARAN KANDIDAT ---")
+while True :
+    nama = input("Masukan nama kandidat (kosongkan untuk selesai ) :")
+    if nama == "" :
+        if len(kandidat_set) >= 2:
+            break
+        else :
+            print ("Minimal harus ada 2 kandidat yang terdaftar sebelum lanjut!")
+            continue
+    daftar_kandidat(kandidat_set, nama)
+print(f"Kandidat terdaftar : {kandidat_set}\n")
+
+def berikan_suara(rekap_suara, kandidat_set, nama_pemilih,pilihan):
+    nama_pemilih = nama_pemilih.lower()
+    if nama_pemilih in rekap_suara :
+        print (f"'{nama_pemilih.capitalize()}'sudah memberikan suara sebelumnya")
+    elif pilihan not in kandidat_set :
+        print (f"kandidat '{pilihan}' tidak ditemukan!")
+    else :
+        rekap_suara[nama_pemilih] = pilihan
+        print (f"Suara '{nama_pemilih.capitalize()}' untuk '{pilihan}' berhasil dicatat!")
+
+rekap_suara = {}
+print ("--- FASE PEMUNGUTAN SUARA ---")
+while True :
+    nama_pemilih = input("Nama pemilih (kosongkan untuk selesai) : ")
+    if nama_pemilih == "":
+        break
+    print (f"kandidat yang tersedia : {kandidat_set}")
+    pilihan = input("Pilih kandidat :").capitalize()
+
+    berikan_suara(rekap_suara, kandidat_set, nama_pemilih,pilihan)
+
+def hitung_suara (rekap_suara, kandidat_set) :
+    perolehan = {}
+    for kandidat in kandidat_set :
+        perolehan[kandidat] = 0
+        for pemilih, pilihan in rekap_suara.items():
+            if pilihan in perolehan :
+                perolehan[pilihan] +=1
+
+        return perolehan
+
+def tampilkan_hasil (perolehan):
+        print("="*33)
+        print ("  HASIL PEMILIHAN KETUA KELAS")
+        print("="*33)
+        total_suara = 0
+        max_suara = -1
+        daftar_pemenang = []
+
+        for kandidat, jumlah in perolehan.items() :
+            print (f"{kandidat} : {jumlah} suara")
+            total_suara += jumlah
+            if jumlah > max_suara :
+                max_suara = jumlah 
+                daftar_pemenang = [kandidat]
+            elif jumlah == max_suara :
+                daftar_pemenang.append(kandidat)
+        print (f"Total suara masuk : {total_suara}")
+
+        if len(daftar_pemenang) > 1:
+            kandidat_seri = ", ".join(daftar_pemenang)
+            print(f"Hasil SERI antara : {kandidat_seri}")
+            print (f"Perlu dilakukan pemilihan ulang!")
+        else :
+            print(f"PEMENANG : {daftar_pemenang[0]} dengan {max_suara} suara!")
+        print("="*33)
+
+hasil_akhir = hitung_suara (rekap_suara, kandidat_set)
+tampilkan_hasil (hasil_akhir)
+        
+
+
+
