@@ -1,0 +1,129 @@
+import os
+import datetime
+import random
+
+if not os.path.exists("invoice"):
+    os.makedirs("invoice")
+
+def membuat_transanksi(nama_kasir):
+    inisial_kasir = nama_kasir[:3].upper()
+
+    items = []
+    total_belanja = 0
+    while True:
+        produk = input("Masukkan nama produk     : ")
+        try:
+            harga  = int(input("Masukkan harga produk    : "))
+            jumlah    = int(input("Masukkan jumlah produk   : "))
+            print("="*60)
+        except ValueError:
+            print("Harga dan jumlah harus berupa angka! Silakan ulangi.")
+            continue
+
+        subtotal = harga*jumlah
+        total_belanja += subtotal
+
+        items.append({
+            "produk": produk,
+            "harga": harga,
+            "jumlah": jumlah,    
+            "subtotal":subtotal
+        })
+
+        mau_tambah_nda = input("Tambah produk? (y/t)     :").lower().strip()
+
+        if mau_tambah_nda == "y":
+            continue
+        else:
+            break
+
+    now = datetime.datetime.now()
+    tahun = now.strftime("%y")
+    bulan = now.strftime("%m")
+    hari = now.strftime("%d")
+    waktu = now.strftime("%H%M")
+    random_num = str(random.randint(100,999)) 
+
+    id_transaksi = (f"{inisial_kasir}{tahun}{bulan}{hari}{waktu}{random_num}")
+    waktu_transaksi = now.strftime("%H:%M")
+    nama_file = f"invoice/{id_transaksi}"
+    with open(nama_file, "w") as f:
+        f.write("\n")
+        f.write(f"{f'TOKO {nama_kasir.upper()}':^60}\n")
+        f.write("="*60)
+        f.write(f"\nNama kasir         : {nama_kasir}")
+        f.write(f"\nWaktu transaksi    : {tahun}/{bulan}/{hari} {waktu_transaksi}\n")
+        f.write("="*60)
+        f.write(f"\n{"Daftar Produk":^60}\n")
+        f.write("="*60)
+        f.write(f"\n| {"Nama":^18} | {"Harga":^11} | {"Jumlah":^6} | {"Total":>12} |\n")
+        f.write("="*60)
+        for item in items:
+            nama_lebih = (item["produk"][:15] + "..." if len(item["produk"]) > 18 else item["produk"])
+            f.write(f"\n| {nama_lebih:^18} | {f"Rp{item["harga"]}":>11} | {item["jumlah"]:^6} | {f"Rp{item["subtotal"]}":>12} |")
+        f.write("\n")        
+        f.write("="*60)
+        f.write(f"\n| {"TOTAL":^18}                        | {f"Rp{total_belanja}":>12} |\n")
+        f.write("="*60)
+        f.write("\n")
+        f.write("="*60)
+        f.write(f"\n{"TERIMA KASIH TELAH BERBELANJA":^60}\n")
+        f.write("="*60)
+
+    filehistoriada = os.path.exists("trx_history.txt")
+    with open("trx_history.txt", "a") as f_his:
+        if not filehistoriada:
+            f_his.write("="*73)
+            f_his.write(f"\n|{"RIWAYAT TRANSAKSI":^71}|\n")
+            f_his.write("="*73)
+            f_his.write(f"\n| {"Waktu":^19} | {"ID Transaksi":^20} | {"Nominal Transaksi":^25}|\n")
+            f_his.write("="*73)
+
+        f_his.write(f"\n| {f"{hari}/{bulan}/{tahun} {waktu_transaksi}":^19} | {id_transaksi:<20} | {f"Rp{total_belanja}":>24} |\n")
+        f_his.write("="*73)
+        f_his.write("\n")
+
+    print("="*60)
+    print(f"{"TRANSAKSI BERHASIL":^60}")
+    print("="*60)
+
+def cari_transaksi():
+    cek_id = input("Masukkan ID transaksi    : ")
+    namafile = f"invoice/{cek_id}"
+    print("-"*60)
+    if os.path.exists(namafile):
+        with open(namafile, "r") as f:
+            print(f.read())
+    else:
+        print("Transaksi tidak ditemukan!")
+
+
+print("="*60)
+print(f"{"SELAMAT DATANG":^60}")
+print("="*60)
+namakasir  = input("Masukkan nama kasir      : ")
+print("="*60)
+
+while True: 
+
+    print("Pilih opsi :")
+    print("1. Transaksi baru")
+    print("2. Cari transaksi")
+    print("3. Keluar")
+    print("="*60)
+    opsi = input("Masukkan opsi pilihan    : ")
+    print("="*60)
+
+    if opsi == "1":
+        membuat_transanksi(namakasir)
+
+    elif opsi == "2":
+        cari_transaksi()
+
+    elif opsi == "3":
+        print(f"{"SAMPAI JUMPA":^60}")
+        print("="*60)   
+        break
+
+    else:
+        print("input tidak valid!")
