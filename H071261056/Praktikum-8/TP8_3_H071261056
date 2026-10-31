@@ -1,0 +1,81 @@
+import re
+
+def membersihkan_nomor_telepon():
+    print ("=== Pembersihan Data Nomor Telepon ===")
+    print()
+    try:
+        jumlah_data = int(input("Masukkan jumlah data : "))
+    except ValueError :
+        print("input data harus berupa angka!")
+        return
+    nomor_valid =[]
+    data_user =[]
+
+    for i in range (1, jumlah_data +1 ):
+        nomor = input(f"Nomor ke-{i} : ")
+        data_user.append(nomor)
+        print()
+
+    print("--- Hasil Pembersihan ---")
+    print()
+    for i, nomor in enumerate(data_user, 1):
+        nomor_bersih =re.sub(r"[\s-]","", nomor)
+
+        if re.fullmatch(r"\d{10,13}", nomor_bersih):
+            status = "Valid"
+            nomor_valid.append(nomor_bersih)
+        else :
+            status = "Tidak valid"
+
+        print(f"Data {i} : ")
+        print(f"Sebelum  : {nomor}")
+        print(f"Sesudah  : {nomor_bersih}")
+        print(f"Status   : {status} ")
+        print()
+
+    print(f"Jumlah nomor valid : {len(nomor_valid)}")
+
+membersihkan_nomor_telepon()
+
+
+
+# import re
+
+# def membersihkan_nomor_telepon():
+#     print ("=== Pembersihan Data Nomor Telepon ===")
+#     print ()
+#     try:
+#         jumlah_data = int(input("Masukkan jumlah data : "))
+#     except ValueError :
+#         print ("input data harus berupa angka")
+#         return
+        
+
+#     nomor_valid = []
+#     data_user = []
+
+#     for i in range (1, jumlah_data +1 ):
+#         nomor = input(f"Nomor ke-{i} : ")
+#         data_user.append(nomor)
+#         print()
+
+#     print("--- Hasil Pembersihan ---")
+#     print()
+
+#     for i, nomor in enumerate(data_user, 1):
+#         no_bersih = re.sub(r"[\s-]","", nomor)
+
+#         if re.fullmatch(r"\d{10,13}", no_bersih):
+#             status = "Valid"
+#             nomor_valid.append(no_bersih)
+#         else :
+#             status = "Tidak valid"
+
+#         print (f"Data : {i}")
+#         print (f"Sebelum    : {nomor}")
+#         print (f"Sesudah    : {no_bersih}")
+#         print (f"Status     : {status} ")
+#         print()
+#     print(f"Jumlah nomor valid : {len(nomor_valid)}")
+
+# membersihkan_nomor_telepon()

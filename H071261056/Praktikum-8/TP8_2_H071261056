@@ -1,0 +1,67 @@
+import re
+
+def validasi_user(Username):
+    pola =r"[a-zA-Z][a-zA-Z0-9_]{4,11}"
+    return re.fullmatch(pola,Username)
+
+def sistem_username():
+    print("=== Registrasi Username ===")
+    print("Ketik 'SELESAI' untuk mengakhiri.")
+    print()
+
+    username_valid = []
+
+    while True :
+        username = input("Masukkan Username : ")
+
+        if username == "SELESAI".lower():
+            break
+
+        if validasi_user (username) :
+            print("Username tersedia.")
+            username_valid.append(username)
+        else :
+            print("Username tidak valid!")
+    print()
+    print("=== Rekapitulasi ===")
+    print("Username valid :")
+    for i, user in enumerate(username_valid, 1):
+        print(f"{i}.{user}")
+    print (f"Jumlah username valid : {len(username_valid)}")
+    
+
+sistem_username()
+
+# import re
+
+# def validasi_username(username):
+#     pola = r"[a-zA-Z][a-zA-Z0-9_]{4-11}"
+#     return re.fullmatch(pola,username)
+
+# def sistem():
+#     print("=== Registrasi Username ===")
+#     print("Ketik 'SELESAI' untuk mengakhiri.")
+#     print()
+
+#     valid_user = []
+
+#     while True :
+#         user = input("Masukkan username : ")
+
+#         if user == "SELESAI":
+#             break
+
+#         if validasi_username(user):
+#             print("Username tersedia.")
+#             valid_user.append(user)
+#         else :
+#             print("Username tidak valid!")
+        
+#     print("=== Rekapitulasi ===")
+#     print("Username valid :")
+#     print()
+    
+#     for i, user in enumerate(valid_user, 1):
+#         print (f"Jumlah username valid : {len(valid_user)}")
+
+# sistem()
