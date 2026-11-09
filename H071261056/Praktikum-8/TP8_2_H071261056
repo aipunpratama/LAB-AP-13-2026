@@ -32,36 +32,3 @@ def sistem_username():
 
 sistem_username()
 
-# import re
-
-# def validasi_username(username):
-#     pola = r"[a-zA-Z][a-zA-Z0-9_]{4-11}"
-#     return re.fullmatch(pola,username)
-
-# def sistem():
-#     print("=== Registrasi Username ===")
-#     print("Ketik 'SELESAI' untuk mengakhiri.")
-#     print()
-
-#     valid_user = []
-
-#     while True :
-#         user = input("Masukkan username : ")
-
-#         if user == "SELESAI":
-#             break
-
-#         if validasi_username(user):
-#             print("Username tersedia.")
-#             valid_user.append(user)
-#         else :
-#             print("Username tidak valid!")
-        
-#     print("=== Rekapitulasi ===")
-#     print("Username valid :")
-#     print()
-    
-#     for i, user in enumerate(valid_user, 1):
-#         print (f"Jumlah username valid : {len(valid_user)}")
-
-# sistem()
