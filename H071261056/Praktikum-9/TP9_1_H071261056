@@ -1,0 +1,95 @@
+class pemain :
+    def __init__(self,nama,id_pemain,role,nilai_kill,nilai_assist,nilai_objective):
+        self.nama = nama
+        self.id_pemain = id_pemain
+        self.role = role
+        self.nilai_kill = nilai_kill
+        self.nilai_assist = nilai_assist
+        self.nilai_objective = nilai_objective
+
+    def hitung_skor_akhir(self):
+        skor_akhir = (0.3 * self.nilai_kill) + (0.3 * self.nilai_assist) + (0.3 * self.nilai_objective)
+        return skor_akhir
+    
+    def status_peforma(self):
+        return "Unggul" if self.hitung_skor_akhir() >=60 else "Perlu Evaluasi"
+
+    def tampilkan_data(self,nomor):
+        skor = self.hitung_skor_akhir()
+        status = self.status_peforma()
+        print (f"| {nomor:<3} | {self.nama:<10} | {self.id_pemain:<12} | {self.role:<10} | {skor:<12.2f} | {status:<12} |")
+
+def input_teks (pesan):
+    while True :
+        teks = input(pesan).strip()
+        if teks =="":
+            print("Input tidak boleh kosong. Silahkan coba lagi.")
+        else :
+            return teks
+
+def input_angka(pesan):
+    while True :
+        try :
+            angka = float(input(pesan))
+            if angka <0 or angka >100:
+                print ("Nilai harus antara 0-100.Silahkan coba lagi.")
+            else : 
+                return angka
+        except ValueError :
+            print ("Input harus berupa angka.Silahkan coba lagi.")
+
+def Jumlah(pesan):
+    while True :
+        try :
+            jumlah = int(input(pesan))
+            if jumlah <=0:
+                print ("Jumlah pemain harus lebih dari 0. Silahkan coba lagi.")
+            else :
+                return jumlah
+        except ValueError :
+            print ("Input harus berupa bilangan bulat. Silahkan coba lagi.")
+
+def id_lama(daftar_pemain,id_baru):
+    for pemain in daftar_pemain:
+        if pemain.id_pemain.lower() == id_baru.lower():
+            return True
+        return False 
+
+def input_id(daftar_pemain):
+     while True :
+        id_pemain = input("ID pemain : ")
+        if id_lama(daftar_pemain,id_pemain):
+            print ("ID pemain sudah digunakan. Silahkan masukkan ID lain.")
+        else :
+            return id_pemain
+print ("=== SISTEM PENILAIIAN PERFORMA PEMAIN ===")
+print ()
+jumlah_pemain = int(input("Masukkan jumlah pemain : "))
+daftar_pemain = []
+
+for i in range (jumlah_pemain):
+    print ()
+    print (f"--- Data Pemain ke-{i+1} ---")
+    nama = input("Nama :")
+    id_pemain = input("Id pemain :")
+    role = input("Role : ")
+    nilai_kill = int(input("Nilai kill : "))
+    nilai_assist = int(input("Nilai assist : "))
+    nilai_objective = int(input("Nilai objective : "))
+
+    pemain_baru = pemain(nama,id_pemain,role,nilai_kill,nilai_assist,nilai_objective)
+    daftar_pemain.append(pemain_baru)
+
+print ()
+print ("=== REKAPITULASI PERFORMA PEMAIN ===")
+print("="*78)
+print(f"| {'No':<3} | {'Nama':<10} | {'id pemain':<12} | {'role':<10} | {'skor_akhir':<12} | {'status':<12} |")
+print ("="*78)
+
+nomor = 1
+for pemain in daftar_pemain :
+    pemain.tampilkan_data(nomor)
+    nomor +=1
+
+print("="*78)
+
